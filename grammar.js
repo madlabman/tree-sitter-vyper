@@ -25,7 +25,7 @@ const PREC = {
 const SEMICOLON = ';'
 
 module.exports = grammar({
-  name: 'python',
+  name: 'vyper',
 
   extras: $ => [
     $.comment,
@@ -110,6 +110,7 @@ module.exports = grammar({
       $.return_statement,
       $.delete_statement,
       $.raise_statement,
+      $.log_statement,
       $.pass_statement,
       $.break_statement,
       $.continue_statement,
@@ -234,6 +235,11 @@ module.exports = grammar({
       optional(seq('from', field('cause', $.expression)))
     ),
 
+    log_statement: $ => seq(
+      'log',
+      $._expressions,
+    ),
+
     pass_statement: $ => prec.left('pass'),
     break_statement: $ => prec.left('break'),
     continue_statement: $ => prec.left('continue'),
@@ -250,6 +256,10 @@ module.exports = grammar({
       $.class_definition,
       $.decorated_definition,
       $.match_statement,
+      $.event_definition,
+      $.struct_definition,
+      $.interface_definition,
+      $.enum_definition,
     ),
 
     if_statement: $ => seq(
@@ -442,6 +452,61 @@ module.exports = grammar({
       field('superclasses', optional($.argument_list)),
       ':',
       field('body', $._suite)
+    ),
+
+    event_definition: $ => seq(
+      'event',
+      field('name', $.identifier),
+      ':',
+      field('body', $._suite)
+    ),
+
+    struct_definition: $ => seq(
+      'struct',
+      field('name', $.identifier),
+      ':',
+      field('body', $._suite)
+    ),
+
+    interface_definition: $ => seq(
+      'interface',
+      field('name', $.identifier),
+      ':',
+      field('body', $.interface_sigs),
+    ),
+
+    interface_sigs: $ => seq(
+      $._newline,
+      $._indent,
+      repeat1($.interface_sig),
+      $._dedent,
+    ),
+
+    interface_sig: $ => seq(
+      'def',
+      field('name', $.identifier),
+      field('parameters', $.parameters),
+      optional(
+        seq(
+          '->',
+          field('return_type', $.type)
+        )
+      ),
+      ':',
+      field('mutability', $.identifier),
+    ),
+
+    enum_definition: $ => seq(
+      'enum',
+      field('name', $.identifier),
+      ':',
+      field('members', $.enum_members),
+    ),
+
+    enum_members: $ => seq(
+      $._indent,
+      repeat1($.identifier),
+      $._dedent,
     ),
 
     parenthesized_list_splat: $ => prec(PREC.parenthesized_list_splat, seq(

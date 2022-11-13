@@ -16,17 +16,18 @@ function checkout() {
   popd
 }
 
-checkout examples/numpy numpy/numpy 058851c5cfc98f50f11237b1c13d77cfd1f40475
-checkout examples/django django/django 01974d7f7549b2dca2a729c3c1a1ea7d4585eb3a
-checkout examples/flask pallets/flask de464c03e134127140e5622e230790806a133ff9
+checkout examples/vyper vyperlang/vyper 886488f715d75f185dfee0d281ee6288411920da
+checkout examples/anchor lidofinance/anchor-collateral-steth 4f58604305d4114390b42fc1befaa5e67bfb6858
+checkout examples/curve lidofinance/curve-rewards-manager 57b97b671f2bc6cf8bf0d71b3a327c0c7821cc49
+
 
 known_failures="$(cat script/known_failures.txt)"
 
 tree-sitter parse -q \
-  'examples/**/*.py' \
+  'examples/**/*.vy' \
   $(for file in $known_failures; do echo "!${file}"; done)
 
-example_count=$(find examples -name '*.py' | wc -l)
+example_count=$(find examples -name '*.vy' | wc -l)
 failure_count=$(wc -w <<< "$known_failures")
 success_count=$(( $example_count - $failure_count ))
 success_percent=$(bc -l <<< "100*${success_count}/${example_count}")

@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "tree_sitter_python_binding",
+      "target_name": "tree_sitter_vyper_binding",
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
         "src"

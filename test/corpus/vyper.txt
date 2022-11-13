@@ -1,0 +1,148 @@
+=================
+Vyper definitions
+=================
+
+tytul: public(address)
+end: immutable(uint)
+amount: constant(uint) = 10_000
+
+---
+
+(module
+  (expression_statement
+    (assignment
+      (identifier)
+      (type
+        (call
+          (identifier)
+          (argument_list
+            (identifier))))))
+  (expression_statement
+    (assignment
+      (identifier)
+      (type
+        (call
+          (identifier)
+          (argument_list
+            (identifier))))))
+  (expression_statement
+    (assignment
+      (identifier)
+      (type
+        (call
+          (identifier)
+          (argument_list
+            (identifier))))
+      (integer))))
+
+============
+Vyper events
+============
+
+event AuctionEnded:
+    highestBidder: address
+    highestBid: uint256
+
+---
+
+(module
+  (event_definition
+    (identifier)
+    (block
+      (expression_statement
+        (assignment
+          (identifier)
+          (type
+            (identifier))))
+      (expression_statement
+        (assignment
+          (identifier)
+          (type
+            (identifier)))))))
+
+=============
+Vyper structs
+=============
+
+
+struct Bid:
+  blindedBid: bytes32
+  deposit: uint256
+
+---
+
+(module
+  (struct_definition
+    (identifier)
+    (block
+      (expression_statement
+        (assignment
+          (identifier)
+          (type
+            (identifier))))
+      (expression_statement
+        (assignment
+          (identifier)
+          (type
+            (identifier)))))))
+
+================
+Vyper interfaces
+================
+
+interface FooBar:
+    def calculate() -> uint256: view
+    def test1(): nonpayable
+
+---
+
+(module
+  (interface_definition
+    (identifier)
+    (interface_sigs
+      (interface_sig
+        (identifier)
+        (parameters)
+        (type
+          (identifier))
+        (identifier))
+      (interface_sig
+        (identifier)
+        (parameters)
+        (identifier)))))
+
+=========
+Vyper log
+=========
+
+log Transfer(msg.sender, _to, _value)
+
+---
+
+(module
+  (log_statement
+    (call
+      (identifier)
+      (argument_list
+        (attribute
+          (identifier)
+          (identifier))
+        (identifier)
+        (identifier)))))
+
+===========
+Vyper enums
+===========
+
+enum Roles:
+    ADMIN
+    USER
+
+---
+
+(module
+  (enum_definition
+    (identifier)
+    (enum_members
+      (identifier)
+      (identifier))))

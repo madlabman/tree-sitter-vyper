@@ -12,6 +12,14 @@
         "named": true
       },
       {
+        "type": "enum_definition",
+        "named": true
+      },
+      {
+        "type": "event_definition",
+        "named": true
+      },
+      {
         "type": "for_statement",
         "named": true
       },
@@ -24,7 +32,15 @@
         "named": true
       },
       {
+        "type": "interface_definition",
+        "named": true
+      },
+      {
         "type": "match_statement",
+        "named": true
+      },
+      {
+        "type": "struct_definition",
         "named": true
       },
       {
@@ -83,6 +99,10 @@
       },
       {
         "type": "import_statement",
+        "named": true
+      },
+      {
+        "type": "log_statement",
         "named": true
       },
       {
@@ -1238,6 +1258,73 @@
     }
   },
   {
+    "type": "enum_definition",
+    "named": true,
+    "fields": {
+      "members": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_members",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "enum_members",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "event_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "except_clause",
     "named": true,
     "fields": {},
@@ -1712,6 +1799,93 @@
     }
   },
   {
+    "type": "interface_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "interface_sigs",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "interface_sig",
+    "named": true,
+    "fields": {
+      "mutability": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "parameters",
+            "named": true
+          }
+        ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "interface_sigs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "interface_sig",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "interpolation",
     "named": true,
     "fields": {},
@@ -1911,6 +2085,25 @@
         },
         {
           "type": "subscript",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "log_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "expression_list",
           "named": true
         }
       ]
@@ -2313,6 +2506,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "struct_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2898,8 +3117,16 @@
     "named": false
   },
   {
+    "type": "enum",
+    "named": false
+  },
+  {
     "type": "escape_sequence",
     "named": true
+  },
+  {
+    "type": "event",
+    "named": false
   },
   {
     "type": "except",
@@ -2958,11 +3185,19 @@
     "named": true
   },
   {
+    "type": "interface",
+    "named": false
+  },
+  {
     "type": "is",
     "named": false
   },
   {
     "type": "lambda",
+    "named": false
+  },
+  {
+    "type": "log",
     "named": false
   },
   {
@@ -2999,6 +3234,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "struct",
     "named": false
   },
   {
