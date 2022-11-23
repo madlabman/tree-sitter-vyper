@@ -19,7 +19,6 @@
 ((identifier) @constant.builtin
  (#any-of? @constant.builtin
            ;; https://docs.python.org/3/library/constants.html
-           "NotImplemented"
            "Ellipsis"
            "quit"
            "exit"
@@ -30,21 +29,6 @@
 ((attribute
     attribute: (identifier) @field)
  (#match? @field "^([A-Z])@!.*$"))
-
-((identifier) @type.builtin
- (#any-of? @type.builtin
-              ;; https://docs.python.org/3/library/exceptions.html
-              "BaseException" "Exception" "ArithmeticError" "BufferError" "LookupError" "AssertionError" "AttributeError"
-              "EOFError" "FloatingPointError" "GeneratorExit" "ImportError" "ModuleNotFoundError" "IndexError" "KeyError"
-              "KeyboardInterrupt" "MemoryError" "NameError" "NotImplementedError" "OSError" "OverflowError" "RecursionError"
-              "ReferenceError" "RuntimeError" "StopIteration" "StopAsyncIteration" "SyntaxError" "IndentationError" "TabError"
-              "SystemError" "SystemExit" "TypeError" "UnboundLocalError" "UnicodeError" "UnicodeEncodeError" "UnicodeDecodeError"
-              "UnicodeTranslateError" "ValueError" "ZeroDivisionError" "EnvironmentError" "IOError" "WindowsError"
-              "BlockingIOError" "ChildProcessError" "ConnectionError" "BrokenPipeError" "ConnectionAbortedError"
-              "ConnectionRefusedError" "ConnectionResetError" "FileExistsError" "FileNotFoundError" "InterruptedError"
-              "IsADirectoryError" "NotADirectoryError" "PermissionError" "ProcessLookupError" "TimeoutError" "Warning"
-              "UserWarning" "DeprecationWarning" "PendingDeprecationWarning" "SyntaxWarning" "RuntimeWarning"
-              "FutureWarning" "ImportWarning" "UnicodeWarning" "BytesWarning" "ResourceWarning"))
 
 ; Function calls
 
@@ -72,16 +56,17 @@
  (#lua-match? @constructor "^[A-Z]"))
 
 ;; Builtin functions
+;; $(".sig-object .sig-name span.pre").map((_, v) => `"${v.innerText}"`).toArray().sort().join(" ")
 
 ((call
   function: (identifier) @function.builtin)
  (#any-of? @function.builtin
-          "abs" "all" "any" "ascii" "bin" "bool" "breakpoint" "bytearray" "bytes" "callable" "chr" "classmethod"
-          "compile" "complex" "delattr" "dict" "dir" "divmod" "enumerate" "eval" "exec" "filter" "float" "format"
-          "frozenset" "getattr" "globals" "hasattr" "hash" "help" "hex" "id" "input" "int" "isinstance" "issubclass"
-          "iter" "len" "list" "locals" "map" "max" "memoryview" "min" "next" "object" "oct" "open" "ord" "pow"
-          "print" "property" "range" "repr" "reversed" "round" "set" "setattr" "slice" "sorted" "staticmethod" "str"
-          "sum" "super" "tuple" "type" "vars" "zip" "__import__" "indexed" "public" "constant" "immutable"))
+          "_abi_decode" "_abi_encode" "abs" "as_wei_value" "bitwise_and" "bitwise_not" "bitwise_or" "bitwise_xor"
+          "blockhash" "ceil" "concat" "convert" "create_copy_of" "create_from_blueprint" "create_minimal_proxy_to"
+          "ecadd" "ecmul" "ecrecover" "empty" "extract32" "floor" "isqrt" "keccak256" "len" "max" "max_value"
+          "method_id" "min" "min_value" "pow_mod256" "print" "raw_call" "raw_log" "selfdestruct" "send" "sha256" "shift"
+          "slice" "sqrt" "uint256_addmod" "uint256_mulmod" "uint2str" "unsafe_add" "unsafe_div" "unsafe_mul"
+          "unsafe_sub" "print" "indexed" "public" "constant" "immutable"))
 
 ;; Function definitions
 
@@ -168,7 +153,6 @@
 [
   "-"
   "-="
-  ":="
   "!="
   "*"
   "**"
@@ -223,15 +207,7 @@
 
 [
   "assert"
-  "async"
-  "await"
-  "class"
-  "exec"
-  "global"
-  "nonlocal"
   "pass"
-  "print"
-  "with"
   "as"
   "log"
   "event"
@@ -241,33 +217,22 @@
 
 [
   "return"
-  "yield"
 ] @keyword.return
-(yield "from" @keyword.return)
 
-(future_import_statement "from" @include "__future__" @constant.builtin)
 (import_from_statement "from" @include)
 "import" @include
 
 (aliased_import "as" @include)
 
-["if" "elif" "else" "match" "case"] @conditional
+["if" "elif" "else"] @conditional
 
 ["for" "while" "break" "continue"] @repeat
 
 [
-  "try"
-  "except"
-  "except*"
   "raise"
-  "finally"
 ] @exception
 
 (raise_statement "from" @exception)
-
-(try_statement
-  (else_clause
-    "else" @exception))
 
 ["(" ")" "[" "]" "{" "}"] @punctuation.bracket
 
@@ -276,39 +241,6 @@
   "}" @punctuation.special)
 
 ["," "." ":" ";" (ellipsis)] @punctuation.delimiter
-
-;; Class definitions
-
-(class_definition name: (identifier) @type)
-
-(class_definition
-  body: (block
-          (function_definition
-            name: (identifier) @method)))
-
-(class_definition
-  superclasses: (argument_list
-                  (identifier) @type))
-
-((class_definition
-  body: (block
-          (expression_statement
-            (assignment
-              left: (identifier) @field))))
- (#match? @field "^([A-Z])@!.*$"))
-((class_definition
-  body: (block
-          (expression_statement
-            (assignment
-              left: (_
-                     (identifier) @field)))))
- (#match? @field "^([A-Z])@!.*$"))
-
-((class_definition
-  (block
-    (function_definition
-      name: (identifier) @constructor)))
- (#any-of? @constructor "__new__" "__init__"))
 
 ;; Event definitions
 

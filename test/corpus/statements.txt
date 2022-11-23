@@ -90,81 +90,6 @@ from ..a import b
       (identifier))))
 
 ================================================================================
-Future import statements
-================================================================================
-
-from __future__ import print_statement
-from __future__ import python4
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
---------------------------------------------------------------------------------
-
-(module
-  (future_import_statement
-    (dotted_name
-      (identifier)))
-  (future_import_statement
-    (dotted_name
-      (identifier)))
-  (future_import_statement
-    (dotted_name
-      (identifier))
-    (dotted_name
-      (identifier))
-    (dotted_name
-      (identifier))
-    (dotted_name
-      (identifier))))
-
-================================================================================
-Print statements
-================================================================================
-
-print a
-print b, c
-print 0 or 1, 1 or 0,
-print 0 or 1
-
---------------------------------------------------------------------------------
-
-(module
-  (print_statement
-    (identifier))
-  (print_statement
-    (identifier)
-    (identifier))
-  (print_statement
-    (boolean_operator
-      (integer)
-      (integer))
-    (boolean_operator
-      (integer)
-      (integer)))
-  (print_statement
-    (boolean_operator
-      (integer)
-      (integer))))
-
-================================================================================
-Print statements with redirection
-================================================================================
-
-print >> a
-print >> a, "b", "c"
-
---------------------------------------------------------------------------------
-
-(module
-  (print_statement
-    (chevron
-      (identifier)))
-  (print_statement
-    (chevron
-      (identifier))
-    (string)
-    (string)))
-
-================================================================================
 Assert statements
 ================================================================================
 
@@ -415,9 +340,9 @@ For statements
 ================================================================================
 
 for line, i in lines:
-  print line
+  pass
   for character, j in line:
-    print character
+    pass
 else:
   print x
 
@@ -428,329 +353,38 @@ for x, in [(1,), (2,), (3,)]:
 
 (module
   (for_statement
-    left: (pattern_list
+    (pattern_list
       (identifier)
       (identifier))
-    right: (identifier)
-    body: (block
-      (print_statement
-        argument: (identifier))
+    (identifier)
+    (block
+      (pass_statement)
       (for_statement
-        left: (pattern_list
+        (pattern_list
           (identifier)
           (identifier))
-        right: (identifier)
-        body: (block
-          (print_statement
-            argument: (identifier)))))
-    alternative: (else_clause
-      body: (block
-        (print_statement
-          argument: (identifier)))))
+        (identifier)
+        (block
+          (pass_statement))))
+    (else_clause
+      (ERROR
+        (identifier))
+      (block
+        (expression_statement
+          (identifier)))))
   (for_statement
-    left: (pattern_list
+    (pattern_list
       (identifier))
-    right: (list
+    (list
       (tuple
         (integer))
       (tuple
         (integer))
       (tuple
         (integer)))
-    body: (block
-      (expression_statement
-        (identifier)))))
-
-================================================================================
-Try statements
-================================================================================
-
-try:
-  a
-except b:
-  c
-except d as e:
-  f
-except g, h:
-  i
-except:
-  j
-
-try:
-  a
-except b:
-  c
-  d
-else:
-  e
-finally:
-  f
-
-try:
-  a
-except* b:
-  c
-except* d as e:
-  f
-else:
-  g
-finally:
-  h
-
---------------------------------------------------------------------------------
-
-(module
-  (try_statement
-    body: (block
-      (expression_statement
-        (identifier)))
-    (except_clause
-      (identifier)
-      (block
-        (expression_statement
-          (identifier))))
-    (except_clause
-      (as_pattern
-        (identifier)
-        alias: (as_pattern_target
-          (identifier)))
-      (block
-        (expression_statement
-          (identifier))))
-    (except_clause
-      (identifier)
-      (identifier)
-      (block
-        (expression_statement
-          (identifier))))
-    (except_clause
-      (block
-        (expression_statement
-          (identifier)))))
-  (try_statement
-    body: (block
-      (expression_statement
-        (identifier)))
-    (except_clause
-      (identifier)
-      (block
-        (expression_statement
-          (identifier))
-        (expression_statement
-          (identifier))))
-    (else_clause
-      body: (block
-        (expression_statement
-          (identifier))))
-    (finally_clause
-      (block
-        (expression_statement
-          (identifier)))))
-  (try_statement
-    body: (block
-      (expression_statement
-        (identifier)))
-    (except_group_clause
-      (identifier)
-      (block
-        (expression_statement
-          (identifier))))
-    (except_group_clause
-      (as_pattern
-        (identifier)
-        alias: (as_pattern_target
-          (identifier)))
-      (block
-        (expression_statement
-          (identifier))))
-    (else_clause
-      body: (block
-        (expression_statement
-          (identifier))))
-    (finally_clause
-      (block
-        (expression_statement
-          (identifier))))))
-
-================================================================================
-With statements
-================================================================================
-
-with a as b:
-  c
-
-with (open('d') as d,
-      open('e') as e):
-  f
-
---------------------------------------------------------------------------------
-
-(module
-  (with_statement
-    (with_clause
-      (with_item
-        (as_pattern
-          (identifier)
-          (as_pattern_target
-            (identifier)))))
-    (block
-      (expression_statement
-        (identifier))))
-  (with_statement
-    (with_clause
-      (with_item
-        (tuple
-          (as_pattern
-            (call
-              (identifier)
-              (argument_list
-                (string)))
-            (as_pattern_target
-              (identifier)))
-          (as_pattern
-            (call
-              (identifier)
-              (argument_list
-                (string)))
-            (as_pattern_target
-              (identifier))))))
     (block
       (expression_statement
         (identifier)))))
-
-================================================================================
-Async Function definitions
-================================================================================
-
-async def a():
-  b
-
-async def c(d):
-  e
-
-async def g(g, h,):
-  i
-
-async def c(a: str):
-  a
-
-async def c(a: b.c):
-  a
-
-async def d(a: Sequence[T]) -> T:
-  a
-
-async def i(a, b=c, *c, **d):
-  a
-
-async def d(a: str) -> None:
-  return None
-
-async def d(a:str="default", b=c) -> None:
-  return None
-
---------------------------------------------------------------------------------
-
-(module
-  (function_definition
-    name: (identifier)
-    parameters: (parameters)
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (identifier))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (identifier)
-      (identifier))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (typed_parameter
-        (identifier)
-        type: (type
-          (identifier))))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (typed_parameter
-        (identifier)
-        type: (type
-          (attribute
-            object: (identifier)
-            attribute: (identifier)))))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (typed_parameter
-        (identifier)
-        type: (type
-          (subscript
-            value: (identifier)
-            subscript: (identifier)))))
-    return_type: (type
-      (identifier))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (identifier)
-      (default_parameter
-        name: (identifier)
-        value: (identifier))
-      (list_splat_pattern
-        (identifier))
-      (dictionary_splat_pattern
-        (identifier)))
-    body: (block
-      (expression_statement
-        (identifier))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (typed_parameter
-        (identifier)
-        type: (type
-          (identifier))))
-    return_type: (type
-      (none))
-    body: (block
-      (return_statement
-        (none))))
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (typed_default_parameter
-        name: (identifier)
-        type: (type
-          (identifier))
-        value: (string))
-      (default_parameter
-        name: (identifier)
-        value: (identifier)))
-    return_type: (type
-      (none))
-    body: (block
-      (return_statement
-        (none)))))
 
 ================================================================================
 Function definitions
@@ -766,7 +400,7 @@ def e(**list: str):
   pass
 
 def f():
-  nonlocal a
+  pass
 
 def g(h, i, /, j, *, k=100, **kwarg):
   return h,i,j,k,kwarg
@@ -779,56 +413,55 @@ def h(*a):
 
 (module
   (function_definition
-    name: (identifier)
-    parameters: (parameters
+    (identifier)
+    (parameters
       (tuple_pattern
         (identifier)
         (identifier)))
-    body: (block
+    (block
       (return_statement
         (tuple
           (identifier)
           (identifier)))))
   (function_definition
-    name: (identifier)
-    parameters: (parameters
+    (identifier)
+    (parameters
       (typed_parameter
         (list_splat_pattern
           (identifier))
-        type: (type
+        (type
           (identifier))))
-    body: (block
+    (block
       (pass_statement)))
   (function_definition
-    name: (identifier)
-    parameters: (parameters
+    (identifier)
+    (parameters
       (typed_parameter
         (dictionary_splat_pattern
           (identifier))
-        type: (type
+        (type
           (identifier))))
-    body: (block
+    (block
       (pass_statement)))
   (function_definition
-    name: (identifier)
-    parameters: (parameters)
-    body: (block
-      (nonlocal_statement
-        (identifier))))
+    (identifier)
+    (parameters)
+    (block
+      (pass_statement)))
   (function_definition
-    name: (identifier)
-    parameters: (parameters
+    (identifier)
+    (parameters
       (identifier)
       (identifier)
       (positional_separator)
       (identifier)
       (keyword_separator)
       (default_parameter
-        name: (identifier)
-        value: (integer))
+        (identifier)
+        (integer))
       (dictionary_splat_pattern
         (identifier)))
-    body: (block
+    (block
       (return_statement
         (expression_list
           (identifier)
@@ -837,22 +470,22 @@ def h(*a):
           (identifier)
           (identifier)))))
   (function_definition
-    name: (identifier)
-    parameters: (parameters
+    (identifier)
+    (parameters
       (list_splat_pattern
         (identifier)))
-    body: (block
+    (block
       (expression_statement
         (call
-          function: (identifier)
-          arguments: (argument_list
+          (identifier)
+          (argument_list
             (parenthesized_expression
               (list_splat
                 (identifier))))))
       (expression_statement
         (call
-          function: (identifier)
-          arguments: (argument_list
+          (identifier)
+          (argument_list
             (parenthesized_expression
               (parenthesized_expression
                 (list_splat
@@ -869,179 +502,54 @@ Empty blocks
 def a(b, c):
 
 if d:
-  print e
+  pass
   while f():
 
 --------------------------------------------------------------------------------
 
-(module
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (function_definition
-    name: (identifier)
-    parameters: (parameters
-      (identifier)
-      (identifier))
-    body: (block))
-  (if_statement
-    condition: (identifier)
-    consequence: (block
-      (print_statement
-        argument: (identifier))
-      (while_statement
-        condition: (call
-          function: (identifier)
-          arguments: (argument_list))
-        body: (block)))))
-
-================================================================================
-Class definitions
-================================================================================
-
-class A:
-  def b(self):
-    return c
-class B():
-  pass
-class B(method1):
-  def method1(self):
-    return
-class C(method1, Sequence[T]):
-  pass
-class D(Sequence[T, U]):
-  pass
-
---------------------------------------------------------------------------------
-
-(module
-  (class_definition
-    (identifier)
-    (block
+    (module
+      (comment)
+      (comment)
+      (comment)
+      (comment)
       (function_definition
         (identifier)
         (parameters
+          (identifier)
           (identifier))
+        (block))
+      (if_statement
+        (identifier)
         (block
-          (return_statement
-            (identifier))))))
-  (class_definition
-    (identifier)
-    (argument_list)
-    (block
-      (pass_statement)))
-  (class_definition
-    (identifier)
-    (argument_list
-      (identifier))
-    (block
-      (function_definition
-        (identifier)
-        (parameters
-          (identifier))
-        (block
-          (return_statement)))))
-  (class_definition
-    (identifier)
-    (argument_list
-      (identifier)
-      (subscript
-        (identifier)
-        (identifier)))
-    (block
-      (pass_statement)))
-  (class_definition
-    (identifier)
-    (argument_list
-      (subscript
-        (identifier)
-        (identifier)
-        (identifier)))
-    (block
-      (pass_statement))))
-
-================================================================================
-Class definitions with superclasses
-================================================================================
-
-class A(B, C):
-  def d():
-    e
-
---------------------------------------------------------------------------------
-
-(module
-  (class_definition
-    (identifier)
-    (argument_list
-      (identifier)
-      (identifier))
-    (block
-      (function_definition
-        (identifier)
-        (parameters)
-        (block
-          (expression_statement
-            (identifier)))))))
+          (pass_statement)
+          (while_statement
+            (call
+              (identifier)
+              (argument_list))
+            (block)))))
 
 ================================================================================
 Decorated definitions
 ================================================================================
 
-@a.b
-class C:
-  @d(1)
-  @e[2].f.g
-  def f():
-    g
-
-  @f()
-  async def f():
-    g
+@f()
+def f():
+  g
 
 --------------------------------------------------------------------------------
 
 (module
   (decorated_definition
     (decorator
-      (attribute
+      (call
         (identifier)
-        (identifier)))
-    (class_definition
+        (argument_list)))
+    (function_definition
       (identifier)
+      (parameters)
       (block
-        (decorated_definition
-          (decorator
-            (call
-              (identifier)
-              (argument_list
-                (integer))))
-          (decorator
-            (attribute
-              (attribute
-                (subscript
-                  (identifier)
-                  (integer))
-                (identifier))
-              (identifier)))
-          (function_definition
-            (identifier)
-            (parameters)
-            (block
-              (expression_statement
-                (identifier)))))
-        (decorated_definition
-          (decorator
-            (call
-              (identifier)
-              (argument_list)))
-          (function_definition
-            (identifier)
-            (parameters)
-            (block
-              (expression_statement
-                (identifier)))))))))
+        (expression_statement
+          (identifier))))))
 
 ================================================================================
 Raise statements
@@ -1071,21 +579,21 @@ raise RunTimeError('NO') from e
 Comments
 ================================================================================
 
-print a
+log a
 # hi
-print b # bye
-print c
+log b # bye
+log c
 
 --------------------------------------------------------------------------------
 
 (module
-  (print_statement
+  (log_statement
     (identifier))
   (comment)
-  (print_statement
+  (log_statement
     (identifier))
   (comment)
-  (print_statement
+  (log_statement
     (identifier)))
 
 ================================================================================
@@ -1176,51 +684,14 @@ if c:
 Newline tokens followed by comments
 ================================================================================
 
-print "a"
+log a
   # We need to recognize the newline *preceding* this comment, because there's no newline after it
 --------------------------------------------------------------------------------
 
 (module
-  (print_statement
-    (string))
-  (comment))
-
-================================================================================
-Global statements
-================================================================================
-
-global a
-global a, b
-
---------------------------------------------------------------------------------
-
-(module
-  (global_statement
+  (log_statement
     (identifier))
-  (global_statement
-    (identifier)
-    (identifier)))
-
-================================================================================
-Exec statements
-================================================================================
-
-exec '1+1'
-exec 'x+=1' in None
-exec 'x+=1' in a, b
-
---------------------------------------------------------------------------------
-
-(module
-  (exec_statement
-    (string))
-  (exec_statement
-    (string)
-    (none))
-  (exec_statement
-    (string)
-    (identifier)
-    (identifier)))
+  (comment))
 
 ================================================================================
 Extra newlines

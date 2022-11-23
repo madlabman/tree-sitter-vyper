@@ -90,31 +90,6 @@ a.b.c
       (identifier))))
 
 ================================================================================
-Await expressions
-================================================================================
-
-await i(j, 5)
-return await i(j, 5)
-
---------------------------------------------------------------------------------
-
-(module
-  (expression_statement
-    (await
-      (call
-        (identifier)
-        (argument_list
-          (identifier)
-          (integer)))))
-  (return_statement
-    (await
-      (call
-        (identifier)
-        (argument_list
-          (identifier)
-          (integer))))))
-
-================================================================================
 Call expressions
 ================================================================================
 
@@ -293,29 +268,6 @@ exec("""exec _code_ in _globs_, _locs_""")
       (identifier)
       (argument_list
         (string)))))
-
-================================================================================
-Async / await used as identifiers
-================================================================================
-
-async = 4
-await = 5
-print async, await
-
---------------------------------------------------------------------------------
-
-(module
-  (expression_statement
-    (assignment
-      (identifier)
-      (integer)))
-  (expression_statement
-    (assignment
-      (identifier)
-      (integer)))
-  (print_statement
-    (identifier)
-    (identifier)))
 
 ================================================================================
 Calls with splats
@@ -675,152 +627,6 @@ c //= 1
       (integer))))
 
 ================================================================================
-Named expressions
-================================================================================
-
-a := x
-(y := f(x))
-foo(x=(y := f(x)))
-y0 = (y1 := f(x))
-def foo(answer=(p := 42)):
-  return answer;
-def foo(answer: (p := 42) = 5):
-  return answer;
-foo(x := 3, cat='vector')
-(z := (y := (x := 0)))
-
---------------------------------------------------------------------------------
-
-(module
-  (expression_statement
-    (named_expression
-      (identifier)
-      (identifier)))
-  (expression_statement
-    (parenthesized_expression
-      (named_expression
-        (identifier)
-        (call
-          (identifier)
-          (argument_list
-            (identifier))))))
-  (expression_statement
-    (call
-      (identifier)
-      (argument_list
-        (keyword_argument
-          (identifier)
-          (parenthesized_expression
-            (named_expression
-              (identifier)
-              (call
-                (identifier)
-                (argument_list
-                  (identifier)))))))))
-  (expression_statement
-    (assignment
-      (identifier)
-      (parenthesized_expression
-        (named_expression
-          (identifier)
-          (call
-            (identifier)
-            (argument_list
-              (identifier)))))))
-  (function_definition
-    (identifier)
-    (parameters
-      (default_parameter
-        (identifier)
-        (parenthesized_expression
-          (named_expression
-            (identifier)
-            (integer)))))
-    (block
-      (return_statement
-        (identifier))))
-  (function_definition
-    (identifier)
-    (parameters
-      (typed_default_parameter
-        (identifier)
-        (type
-          (parenthesized_expression
-            (named_expression
-              (identifier)
-              (integer))))
-        (integer)))
-    (block
-      (return_statement
-        (identifier))))
-  (expression_statement
-    (call
-      (identifier)
-      (argument_list
-        (named_expression
-          (identifier)
-          (integer))
-        (keyword_argument
-          (identifier)
-          (string)))))
-  (expression_statement
-    (parenthesized_expression
-      (named_expression
-        (identifier)
-        (parenthesized_expression
-          (named_expression
-            (identifier)
-            (parenthesized_expression
-              (named_expression
-                (identifier)
-                (integer)))))))))
-
-================================================================================
-Yield expressions
-================================================================================
-
-def example():
-  yield
-  yield 1
-  x = yield 2
-  yield from a
-  yield from (yield from (x for x in range(1, 10)))
-
---------------------------------------------------------------------------------
-
-(module
-  (function_definition
-    (identifier)
-    (parameters)
-    (block
-      (expression_statement
-        (yield))
-      (expression_statement
-        (yield
-          (integer)))
-      (expression_statement
-        (assignment
-          (identifier)
-          (yield
-            (integer))))
-      (expression_statement
-        (yield
-          (identifier)))
-      (expression_statement
-        (yield
-          (parenthesized_expression
-            (yield
-              (generator_expression
-                (identifier)
-                (for_in_clause
-                  (identifier)
-                  (call
-                    (identifier)
-                    (argument_list
-                      (integer)
-                      (integer))))))))))))
-
-================================================================================
 lambdas
 ================================================================================
 
@@ -886,24 +692,6 @@ Tuples with splats
         (identifier)))))
 
 ================================================================================
-Tuples with yield
-================================================================================
-
-(a, yield a, b, c)
-
---------------------------------------------------------------------------------
-
-(module
-  (expression_statement
-    (tuple
-      (identifier)
-      (yield
-        (expression_list
-          (identifier)
-          (identifier)
-          (identifier))))))
-
-================================================================================
 Conditional if expressions
 ================================================================================
 
@@ -939,36 +727,6 @@ slice(1,1,1) if a else d
       (identifier)
       (identifier))))
 
-================================================================================
-Async context managers and iterators
-================================================================================
-
-async with a as b:
-  async for c in d:
-     [e async for f in g]
-
---------------------------------------------------------------------------------
-
-(module
-  (with_statement
-    (with_clause
-      (with_item
-        value: (as_pattern
-          (identifier)
-          alias: (as_pattern_target
-            (identifier)))))
-    body: (block
-      (for_statement
-        left: (identifier)
-        right: (identifier)
-        body: (block
-          (expression_statement
-            (list_comprehension
-              body: (identifier)
-              (for_in_clause
-                left: (identifier)
-                right: (identifier)))))))))
-
 ===========================================
 Arbitrary indentation between brackets
 ==========================================
@@ -978,7 +736,7 @@ def a():
 1,
 2
     )
-    
+
     c = [
 3
     ]

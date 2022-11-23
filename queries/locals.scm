@@ -1,18 +1,6 @@
 ;;; Program structure
 (module) @scope
 
-(class_definition
-  body: (block
-          (expression_statement
-            (assignment
-              left: (identifier) @definition.field)))) @scope
-(class_definition
-  body: (block
-          (expression_statement
-            (assignment
-              left: (_ 
-                     (identifier) @definition.field))))) @scope
-
 ; Imports
 (aliased_import
   alias: (identifier) @definition.import)
@@ -49,15 +37,6 @@
   name: (identifier) @definition.function) @scope
  (#set! definition.function.scope "parent"))
 
-
-((class_definition
-  name: (identifier) @definition.type) @scope
- (#set! definition.type.scope "parent"))
-
-(class_definition
-  body: (block
-          (function_definition
-            name: (identifier) @definition.method)))
 
 ;;; Loops
 ; not a scope!
@@ -104,11 +83,7 @@
    (identifier)
    (identifier) @definition.field))
 
-; Walrus operator  x := 1
-(named_expression
-  (identifier) @definition.var)
-
-(as_pattern 
+(as_pattern
   alias: (as_pattern_target) @definition.var)
 
 ;;; REFERENCES
