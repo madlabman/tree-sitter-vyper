@@ -1,7 +1,7 @@
 tree-sitter-vyper
 ==================
 
-[![build](https://github.com/tree-sitter/tree-sitter-vyper/actions/workflows/ci.yml/badge.svg)](https://github.com/tree-sitter/tree-sitter-vyper/actions/workflows/ci.yml)
+[![build](https://github.com/madlabman/tree-sitter-vyper/actions/workflows/ci.yml/badge.svg)](https://github.com/madlabman/tree-sitter-vyper/actions/workflows/ci.yml)
 
 Vyper grammar for [tree-sitter][].
 
