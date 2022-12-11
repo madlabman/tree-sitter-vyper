@@ -18,7 +18,7 @@ function checkout() {
 
 checkout examples/vyper vyperlang/vyper 886488f715d75f185dfee0d281ee6288411920da
 checkout examples/anchor lidofinance/anchor-collateral-steth 4f58604305d4114390b42fc1befaa5e67bfb6858
-checkout examples/rewards-managers lidofinance/rewards-managers 8f564c96bbca9ef9a06b5624c723429fd3558f58
+checkout examples/curve curvefi/curve-contract b0bbf77f8f93c9c5f4e415bce9cd71f0cdee960e
 
 
 known_failures="$(cat script/known_failures.txt)"

@@ -1,0 +1,15 @@
+examples/curve/contracts/pools/busd/DepositBUSD.vy
+examples/curve/contracts/pools/busd/StableSwapBUSD.vy
+examples/curve/contracts/pools/compound/DepositCompound.vy
+examples/curve/contracts/pools/compound/StableSwapCompound.vy
+examples/curve/contracts/pools/pax/DepositPax.vy
+examples/curve/contracts/pools/pax/StableSwapPax.vy
+examples/curve/contracts/pools/ren/StableSwapRen.vy
+examples/curve/contracts/pools/sbtc/StableSwapSBTC.vy
+examples/curve/contracts/pools/susd/DepositSUSD.vy
+examples/curve/contracts/pools/susd/StableSwapSUSD.vy
+examples/curve/contracts/pools/usdt/DepositUSDT.vy
+examples/curve/contracts/pools/usdt/StableSwapUSDT.vy
+examples/curve/contracts/pools/y/DepositY.vy
+examples/curve/contracts/pools/y/StableSwapY.vy
+examples/curve/contracts/tokens/CurveTokenV1.vy
