@@ -7,7 +7,7 @@
     "parser",
     "lexer"
   ],
-  "author": "Max Brunsfeld",
+  "author": "madlabman",
   "license": "MIT",
   "dependencies": {
     "nan": "^2.15.0"
