@@ -137,6 +137,7 @@ Vyper enums
 enum Roles:
     ADMIN
     USER
+    ERR: uint256
 
 ---
 
@@ -145,4 +146,7 @@ enum Roles:
     (identifier)
     (enum_members
       (identifier)
+      (identifier)
+      (ERROR
+        (identifier))
       (identifier))))

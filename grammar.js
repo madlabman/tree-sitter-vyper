@@ -251,7 +251,6 @@ module.exports = grammar({
     ),
 
     function_definition: $ => seq(
-      optional('async'),
       'def',
       field('name', $.identifier),
       field('parameters', $.parameters),
@@ -334,7 +333,12 @@ module.exports = grammar({
 
     enum_members: $ => seq(
       $._indent,
-      repeat1($.identifier),
+      repeat1(
+        seq(
+          $.identifier,
+          $._newline,
+        ),
+      ),
       $._dedent,
     ),
 
